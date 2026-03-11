@@ -1,0 +1,9 @@
+﻿apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: template-library
+  description: All Backstage templates
+spec:
+  type: url
+  targets:
+    - ./simple-readme/template.yaml
