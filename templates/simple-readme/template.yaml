@@ -3,8 +3,8 @@ apiVersion: scaffolder.backstage.io/v1beta3
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
 kind: Template
 metadata:
-  name: generated-example-template
-  title: Scaffolder Example Template
+  name: simple-readme-template
+  title: simple readme template
   description: An example template for the scaffolder
 spec:
   owner: user:guest
