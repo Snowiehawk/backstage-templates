@@ -1,0 +1,178 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: homelab-service
+  title: Homelab Service
+  description: Generate a Backstage catalog entry for a homelab service
+  tags:
+    - homelab
+    - proxmox
+    - service
+
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: Identity
+      required:
+        - name
+        - title
+        - owner
+        - system
+        - lifecycle
+      properties:
+        name:
+          title: Entity name
+          type: string
+          description: Lowercase catalog name, example openwebui
+          pattern: '^[a-z0-9-]+$'
+          ui:autofocus: true
+
+        title:
+          title: Display title
+          type: string
+          description: Human friendly service name
+
+        description:
+          title: Description
+          type: string
+          description: What this service does
+          ui:widget: textarea
+
+        owner:
+          title: Owner
+          type: string
+          default: guests
+
+        system:
+          title: System
+          type: string
+          default: homelab
+
+        lifecycle:
+          title: Lifecycle
+          type: string
+          default: production
+          enum:
+            - experimental
+            - production
+            - deprecated
+
+        componentType:
+          title: Component type
+          type: string
+          default: service
+          enum:
+            - service
+            - website
+            - tool
+
+    - title: Placement and runtime
+      properties:
+        platform:
+          title: Platform
+          type: string
+          default: vm
+          enum:
+            - vm
+            - lxc
+            - baremetal
+
+        runtime:
+          title: Runtime
+          type: string
+          default: docker-compose
+          enum:
+            - docker
+            - docker-compose
+            - systemd
+            - proxmox
+            - baremetal
+
+        proxmoxNode:
+          title: Proxmox node
+          type: string
+          description: Example pve-ai
+
+        guestName:
+          title: Guest name
+          type: string
+          description: VM or LXC name
+
+        vmid:
+          title: VMID or CTID
+          type: string
+          description: Example 120
+
+        hostIp:
+          title: Host IP
+          type: string
+          description: Physical host IP if you want it recorded
+
+        guestIp:
+          title: Guest IP
+          type: string
+          description: Service guest IP
+
+        ports:
+          title: Ports
+          type: string
+          description: Comma separated, example 3000,11434,8000
+
+    - title: URLs
+      properties:
+        primaryUrl:
+          title: Primary URL
+          type: string
+          description: Main user-facing URL
+
+        adminUrl:
+          title: Admin URL
+          type: string
+          description: Admin or management URL
+
+        sourceUrl:
+          title: Source URL
+          type: string
+          description: Git repo or upstream project URL
+
+        docsUrl:
+          title: Docs URL
+          type: string
+          description: Docs, wiki, or notes URL
+
+  steps:
+    - id: fetch-base
+      name: Render files
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          title: ${{ parameters.title }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          lifecycle: ${{ parameters.lifecycle }}
+          componentType: ${{ parameters.componentType }}
+          platform: ${{ parameters.platform }}
+          runtime: ${{ parameters.runtime }}
+          proxmoxNode: ${{ parameters.proxmoxNode }}
+          guestName: ${{ parameters.guestName }}
+          vmid: ${{ parameters.vmid }}
+          hostIp: ${{ parameters.hostIp }}
+          guestIp: ${{ parameters.guestIp }}
+          ports: ${{ parameters.ports }}
+          primaryUrl: ${{ parameters.primaryUrl }}
+          adminUrl: ${{ parameters.adminUrl }}
+          sourceUrl: ${{ parameters.sourceUrl }}
+          docsUrl: ${{ parameters.docsUrl }}
+
+  output:
+    text:
+      - title: What this generated
+        content: |
+          Generated:
+          - catalog-info.yaml
+          - README.md

@@ -1,0 +1,46 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name | dump }}
+  title: ${{ values.title | dump }}
+  {%- if values.description %}
+  description: ${{ values.description | dump }}
+  {%- endif %}
+  tags:
+    - homelab
+    - proxmox
+    - ${{ values.platform | dump }}
+    - ${{ values.runtime | dump }}
+  annotations:
+    homelab.io/platform: ${{ values.platform | dump }}
+    homelab.io/runtime: ${{ values.runtime | dump }}
+    homelab.io/proxmox-node: ${{ values.proxmoxNode | dump }}
+    homelab.io/guest-name: ${{ values.guestName | dump }}
+    homelab.io/vmid: ${{ values.vmid | dump }}
+    homelab.io/host-ip: ${{ values.hostIp | dump }}
+    homelab.io/guest-ip: ${{ values.guestIp | dump }}
+    homelab.io/ports: ${{ values.ports | dump }}
+  {%- if values.primaryUrl or values.adminUrl or values.sourceUrl or values.docsUrl %}
+  links:
+  {%- if values.primaryUrl %}
+    - url: ${{ values.primaryUrl | dump }}
+      title: Service URL
+  {%- endif %}
+  {%- if values.adminUrl %}
+    - url: ${{ values.adminUrl | dump }}
+      title: Admin URL
+  {%- endif %}
+  {%- if values.sourceUrl %}
+    - url: ${{ values.sourceUrl | dump }}
+      title: Source URL
+  {%- endif %}
+  {%- if values.docsUrl %}
+    - url: ${{ values.docsUrl | dump }}
+      title: Docs URL
+  {%- endif %}
+  {%- endif %}
+spec:
+  type: ${{ values.componentType | dump }}
+  lifecycle: ${{ values.lifecycle | dump }}
+  owner: ${{ values.owner | dump }}
+  system: ${{ values.system | dump }}
