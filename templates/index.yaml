@@ -6,5 +6,6 @@ metadata:
 spec:
   type: url
   targets:
-    - ./simple-readme/template.yaml
-    - ./1st-template/template.yaml
+    # - ./simple-readme/template.yaml
+    # - ./1st-template/template.yaml
+     - ./homelab-service-template/template.yaml
