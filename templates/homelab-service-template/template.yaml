@@ -192,7 +192,7 @@ spec:
         repoUrl: github.com?repo=backstage-templates&owner=Snowiehawk
         branchName: backstage/catalog/service/${{ parameters.name }}
         targetBranchName: main
-        title: catalog(service): upsert ${{ parameters.name }}
+        title: "catalog(service): upsert ${{ parameters.name }}"
         description: |
           Automated catalog change from Backstage.
 
@@ -209,6 +209,6 @@ spec:
           - ${{ parameters.platform }}
         sourcePath: ./out/catalog
         targetPath: catalog
-        commitMessage: catalog(service): upsert ${{ parameters.name }}
+        commitMessage: "catalog(service): upsert ${{ parameters.name }}"
         update: true
         createWhenEmpty: false
