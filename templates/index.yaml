@@ -1,4 +1,4 @@
-﻿apiVersion: backstage.io/v1alpha1
+apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
   name: template-library
@@ -6,6 +6,4 @@ metadata:
 spec:
   type: url
   targets:
-    # - ./simple-readme/template.yaml
-    # - ./1st-template/template.yaml
-     - ./homelab-service-template/template.yaml
+    - ./homelab-service-template/template.yaml
