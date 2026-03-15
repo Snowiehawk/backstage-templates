@@ -1,0 +1,34 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "openwebui"
+  title: "OpenWebui"
+  description: "Self-hosted LLM chat interface"
+  tags:
+    - homelab
+    - proxmox
+    - "vm"
+    - "docker-compose"
+  annotations:
+    homelab.io/platform: "vm"
+    homelab.io/runtime: "docker-compose"
+    homelab.io/proxmox-node: "pve-ai"
+    homelab.io/guest-name: "openwebui-vm"
+    homelab.io/vmid: "120"
+    homelab.io/host-ip: "192.168.1.10"
+    homelab.io/guest-ip: "192.168.1.120"
+    homelab.io/ports: "3000, 11434"
+  links:
+    - url: "http://192.168.1.120:3000"
+      title: Service URL
+    - url: "https://192.168.1.10:8006"
+      title: Admin URL
+    - url: "https://github.com/open-webui/open-webui"
+      title: Source URL
+    - url: "http://192.168.1.120/docs"
+      title: Docs URL
+spec:
+  type: "service"
+  lifecycle: "production"
+  owner: "guests"
+  system: "homelab"
