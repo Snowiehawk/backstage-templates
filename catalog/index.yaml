@@ -5,4 +5,5 @@ metadata:
   description: Homelab catalog entities
 spec:
   type: url
-  targets: []
+  targets:
+    - ./components/openwebui.yaml
