@@ -2,16 +2,21 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: homelab-service
-  title: Homelab Service
-  description: Generate a Backstage catalog entry for a homelab service
+  title: Create or update Homelab Service
+  description: Create or update a homelab service entity and open a GitHub pull request
   tags:
     - homelab
     - proxmox
     - service
+    - gitops
 
 spec:
   owner: user:guest
   type: service
+  presentation:
+    buttonLabels:
+      reviewButtonText: Review change
+      createButtonText: Submit change
 
   parameters:
     - title: Identity
@@ -21,6 +26,7 @@ spec:
         - owner
         - system
         - lifecycle
+        - componentType
       properties:
         name:
           title: Entity name
@@ -142,12 +148,22 @@ spec:
           type: string
           description: Docs, wiki, or notes URL
 
+    - title: Pull request
+      properties:
+        changeSummary:
+          title: Change summary
+          type: string
+          description: One or two lines that explain the create or update
+          default: Create or update catalog entry
+          ui:widget: textarea
+
   steps:
-    - id: fetch-base
-      name: Render files
+    - id: fetchBase
+      name: Render entity file
       action: fetch:template
       input:
         url: ./skeleton
+        targetPath: ./out
         values:
           name: ${{ parameters.name }}
           title: ${{ parameters.title }}
@@ -169,10 +185,30 @@ spec:
           sourceUrl: ${{ parameters.sourceUrl }}
           docsUrl: ${{ parameters.docsUrl }}
 
-  output:
-    text:
-      - title: What this generated
-        content: |
-          Generated:
-          - catalog-info.yaml
-          - README.md
+    - id: publishPullRequest
+      name: Open pull request
+      action: publish:github:pull-request
+      input:
+        repoUrl: github.com?repo=backstage-templates&owner=Snowiehawk
+        branchName: backstage/catalog/service/${{ parameters.name }}
+        targetBranchName: main
+        title: catalog(service): upsert ${{ parameters.name }}
+        description: |
+          Automated catalog change from Backstage.
+
+          Entity:
+          - component:default/${{ parameters.name }}
+
+          Requested change:
+          ${{ parameters.changeSummary }}
+
+          Runtime:
+          - ${{ parameters.runtime }}
+
+          Platform:
+          - ${{ parameters.platform }}
+        sourcePath: ./out/catalog
+        targetPath: catalog
+        commitMessage: catalog(service): upsert ${{ parameters.name }}
+        update: true
+        createWhenEmpty: false

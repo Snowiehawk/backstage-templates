@@ -1,0 +1,40 @@
+name: Rebuild Backstage indexes
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'templates/**'
+      - 'catalog/**'
+      - 'scripts/rebuild-backstage-indexes.sh'
+      - '.github/workflows/rebuild-backstage-indexes.yaml'
+      - '.gitattributes'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rebuild indexes
+        run: bash scripts/rebuild-backstage-indexes.sh
+
+      - name: Commit rebuilt indexes
+        run: |
+          if git diff --quiet -- templates/index.yaml catalog/index.yaml; then
+            echo "No index changes"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add templates/index.yaml catalog/index.yaml
+          git commit -m "chore(indexes): rebuild Backstage indexes"
+          git push
