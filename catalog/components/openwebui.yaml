@@ -32,3 +32,11 @@ spec:
   lifecycle: "production"
   owner: "guests"
   system: "homelab"
+  ---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: homelab
+spec:
+  owner: guests
+
