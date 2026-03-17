@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: homelab-catalog-standards
+  title: Homelab Catalog Standards
+  description: Shared modeling and documentation standards for the homelab Backstage catalog
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - documentation
+    - backstage
+    - homelab
+spec:
+  type: documentation
+  lifecycle: production
+  owner: guests
+  system: homelab

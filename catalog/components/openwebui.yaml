@@ -10,6 +10,7 @@ metadata:
     - "vm"
     - "docker-compose"
   annotations:
+    backstage.io/techdocs-entity: component:default/homelab-catalog-standards
     homelab.io/platform: "vm"
     homelab.io/runtime: "docker-compose"
     homelab.io/proxmox-node: "pve-ai"

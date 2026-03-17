@@ -7,3 +7,4 @@ spec:
   type: url
   targets:
     - ./components/openwebui.yaml
+    - ./documentation/catalog-standards/catalog-info.yaml

@@ -12,6 +12,7 @@ metadata:
     - ${{ values.platform | dump }}
     - ${{ values.runtime | dump }}
   annotations:
+    backstage.io/techdocs-entity: component:default/homelab-catalog-standards
     homelab.io/platform: ${{ values.platform | dump }}
     homelab.io/runtime: ${{ values.runtime | dump }}
     homelab.io/proxmox-node: ${{ values.proxmoxNode | dump }}
